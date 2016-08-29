@@ -1,0 +1,13 @@
+@import "bootstrap";
+
+$darker-white: #fafafa;
+
+body {
+	background-color: $darker-white;
+	padding-top: 70px;
+}
+
+.navbar-default {
+	background-color: white;
+	height: 70px;
+}
