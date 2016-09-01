@@ -4,7 +4,10 @@ export default Ember.Controller.extend({
   firebaseApp: Ember.inject.service(),
   session: Ember.inject.service('session'),
 
+  isLoggingIn: true,
+
 	actions: {
+		
 	  signIn: function(provider) {
 	  	const email = this.get('email');
 	  	const password = this.get('password');
@@ -17,6 +20,10 @@ export default Ember.Controller.extend({
 
 	  signOut: function() {
 	    this.get('session').close();
+	  },
+
+	  setLoginStatus: function(status) {
+	  	this.set('isLoggingIn', status);
 	  }
 
 	}	

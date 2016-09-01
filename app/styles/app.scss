@@ -1,17 +1,15 @@
 @import "bootstrap";
 @import 'variables';
 @import 'https://fonts.googleapis.com/css?family=Lobster|Raleway:300,400,500,600,700';
+@import 'navbar';
 @import 'forms';
+@import 'user-feed';
 
 
 body {
 	background-color: $darker-white;
 	font-family: 'Raleway', sans-serif;
+	font-size: 15px;
 	padding-top: 70px;
-}
-
-.navbar-default {
-	background-color: white;
-	height: 70px;
 }
 
