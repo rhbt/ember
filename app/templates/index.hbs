@@ -1,13 +1,13 @@
 {{#if session.isAuthenticated}}
 
-	{{partial 'user-feed'}}
+	{{partial 'user-home'}}
 
 {{else}}
 
 	{{#if isLoggingIn}}
-	{{partial 'login'}}
+		{{partial 'login'}}
 	{{else}}
-	{{partial 'signup'}}
+		{{partial 'signup'}}
 	{{/if}}
 	
 {{/if}}

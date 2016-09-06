@@ -1,14 +1,14 @@
 @import "bootstrap";
 @import 'variables';
 @import 'https://fonts.googleapis.com/css?family=Lobster|Raleway:300,400,500,600,700';
+@import 'https://fonts.googleapis.com/css?family=Play:400,700';
 @import 'navbar';
 @import 'forms';
-@import 'user-feed';
-
+@import 'user-home';
 
 body {
 	background-color: $darker-white;
-	font-family: 'Raleway', sans-serif;
+	font-family: 'Play', sans-serif;
 	font-size: 15px;
 	padding-top: 70px;
 }

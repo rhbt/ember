@@ -1,1 +1,32 @@
-{{yield}}
+<div class='col-md-3 user-sidebar'>
+	<h2>Your Groups</h2>
+	<hr>
+	
+	<div class='group-container'>
+		<div class='group-pic'><img src='/assets/images/group-placeholder.jpg'></div>
+		<div class='group-text'>
+			<h3>Group Name</h3>
+			<p>460 members</p>
+		</div>
+	</div>
+
+	<div class='group-container'>
+		<div class='group-pic'><img src='/assets/images/group-placeholder.jpg'></div>
+		<div class='group-text'>
+			<h3>Group Name</h3>
+			<p>527 members</p>
+		</div>
+	</div>
+
+	<div class='group-container'>
+		<div class='group-pic'><img src='/assets/images/group-placeholder.jpg'></div>
+		<div class='group-text'>
+			<h3>Group Name</h3>
+			<p>782 members</p>
+		</div>
+	</div>
+
+	<hr>
+	<div class='sidebar-option'>{{#link-to 'groups.new'}}<img src='/assets/images/plus-grey.png'> Create a Group {{/link-to}}</div>
+	<div class='sidebar-option'>{{#link-to 'groups.new'}}<img src='/assets/images/discover-grey.png'> Discover New Groups {{/link-to}}</div>
+</div>

@@ -1,0 +1,73 @@
+.user-sidebar {
+	border: 1px solid $light-grey;
+	margin-top: 3.5%;
+	padding: 0 0 1.5% 0;
+	background-color: white;
+
+	h2 {
+		margin: 10px 2.5%;
+		font-size: 15px;
+		font-weight: 700;
+		text-transform: uppercase;
+	}
+
+	hr {
+		margin: 17.5px auto;
+		width: 95%
+	}
+}
+
+.user-feed-container {
+	margin-top: 3.5%;
+}
+
+.user-feed-item {
+	border: 1px solid $light-grey;
+	width: 99.5%;
+	background-color: white;
+}
+
+
+.group-container {
+	margin: 0 10% 8.5% 2.5%;
+	img {
+		width: 45px;
+		height: 45px;
+	}
+	.group-pic {
+		float: left;
+		margin-top: 2px;
+		margin-right: 2.5%;
+	}
+
+	.group-text {
+		h3 {
+			margin: 0;
+			font-size: 17px;
+			font-weight: 700;
+			color: $light-blue;
+		}
+
+		p {
+			margin-top: 3px;
+		}
+	}
+}
+
+.sidebar-option {
+	margin-bottom: 10px;
+	font-size: 17px;
+	line-height: 130%;
+	a {
+		text-decoration: none;
+		color: black;
+		margin-left: 2.5%;
+
+			img {
+			width: 30px;
+			height: 30px;
+			margin-right: 5px;
+			vertical-align: text-bottom;
+		}
+	}
+}

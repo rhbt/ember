@@ -11,6 +11,11 @@ Router.map(function() {
     this.route('new');
     this.route('show', { path: '/:user_id/show' });
   });
+
+  this.route('groups', function() {
+    this.route('new');
+    this.route('show');
+  });
 });
 
 export default Router;

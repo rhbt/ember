@@ -1,0 +1,35 @@
+<div class='row'>
+
+	<div class='col-md-offset-1 col-md-10'>
+		<div class='group-form'>
+
+			<aside>
+			<h2>What are groups?</h2>
+			<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
+			sed do eiusmod tempor incididunt ut labore et dolore magna 
+			aliqua. Ut enim ad minim veniam, quis nostrud exercitation 
+			ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+			</aside>
+
+			<section>
+			<h1>Create New Group</h1>
+
+			<form>
+			<div class='form-group'>
+			<label>Group name</label>
+			{{input type='text' value=model.name class='form-control'}}
+			</div>
+
+
+			<div class='form-group'>
+			<label>Description</label>
+			{{textarea rows='4' value=model.description class='form-control' placeholder='Describe what the purpose of your group is'}}
+			</div>
+			<button class='btn btn-primary' {{action 'createGroup' model}}> Create group </button>
+			</form>
+			</section>
+		</div>
+	</div>
+</div>
+
+

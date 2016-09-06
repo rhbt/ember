@@ -4,13 +4,10 @@ import Firebase from 'firebase';
 export default Ember.Route.extend({
   firebaseApp: Ember.inject.service(),
   
-  beforeModel: function() {
-    return this.get('session').fetch().catch(function() {});
- 	},
-
   model: function(){
     const uid = this.get('session').get('uid');
     if (uid) {
+      console.log(uid);
       return this.store.find('user', uid);
     } else {
       return null;
