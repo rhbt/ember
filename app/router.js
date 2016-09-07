@@ -14,7 +14,11 @@ Router.map(function() {
 
   this.route('groups', function() {
     this.route('new');
-    this.route('show');
+    this.route('show', {path: ':group_id/show'});
+  });
+
+  this.route('events', function() {
+    this.route('show', {path: ':event_id/show'});
   });
 });
 

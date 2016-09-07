@@ -1,3 +1,7 @@
 <div class='col-md-offset-3 col-md-6 text-center user-feed-container'>
 	<div class='user-feed-item'>USER FEED HELL YEA</div>
+	{{#each events as |event|}}
+	{{#link-to 'events.show' event.id}}{{event.name}}{{/link-to}} <br>
+	{{event.description}} <br>
+	{{/each}}
 </div>

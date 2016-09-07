@@ -18,8 +18,8 @@
 			{{#if session.isAuthenticated}}
 			<div class='col-md-4'>
 	      	<ul class="nav navbar-nav navbar-right">
-	      		<li><a href='#'><img src='/assets/images/discover.png' id='nav-icon'></a></li>
-	      		<li><a href='#'><img src='/assets/images/user.png' id='nav-icon'></a></li>
+	      		<li>{{#link-to 'groups.index'}}<img src='/assets/images/discover.png' id='nav-icon'>{{/link-to}}</li>
+	      		<li>{{#link-to 'users.show' session.currentUser.uid}}<img src='/assets/images/user.png' id='nav-icon'>{{/link-to}}</li>
 	      		<li><a href='#' {{action 'signOut'}}><img src='/assets/images/logout.png' id='nav-icon'></a></li>
          </ul>
 			</div>

@@ -4,15 +4,30 @@ import Firebase from 'firebase';
 export default Ember.Route.extend({
   firebaseApp: Ember.inject.service(),
   
-  model: function(){
-    const uid = this.get('session').get('uid');
-    if (uid) {
-      console.log(uid);
-      return this.store.find('user', uid);
-    } else {
-      return null;
-    }
+  model() {
+    return Ember.RSVP.hash({
+      user: function(){
+        const uid = this.get('session').get('uid');
+        if (uid) {
+          console.log(uid);
+          return this.store.find('user', uid);
+        } else {
+          return null;
+        }
+      },
+      events: this.store.findAll('event')
+    });
   },
+
+  setupController(controller, model) {
+    this._super(...arguments);
+    Ember.set(controller, 'user', model.user);
+    Ember.set(controller, 'events', model.events);
+  },
+
+  // model() {
+  //   return this.store.findAll('event');
+  // },
 
  	actions: {
    	facebookLogin: function(provider) {
@@ -26,7 +41,7 @@ export default Ember.Route.extend({
         	 var userExist = that.store.find('user', uid).then(function(user){
              
             }).catch(function(error){
-              const displayName = data.currentUser.displayName.split(" ");
+              const displayName = data.currentUser.displayName.split(' ');
               const firstName = displayName[0];
               const lastName = displayName[1];
               
