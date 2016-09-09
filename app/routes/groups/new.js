@@ -21,7 +21,23 @@ export default Ember.Route.extend({
 						.then(function(newGroup){
 							that.transitionTo('index')});
 				});
-		}
+		},
+
+	    willTransition(transition) {
+
+	      let model = this.controller.get('model');
+	      console.log(model.isDirty);
+ 		  model.rollbackAttributes();
+	      // if (model.get('hasDirtyAttributes')) {
+	      //   let confirmation = confirm("Your changes haven't saved yet. Would you like to leave this page?");
+
+	      //   if (confirmation) {
+	      //     model.rollbackAttributes();
+	      //   } else {
+	      //     transition.abort();
+	      //   }
+	      // }
+	    }
 
 	}
 

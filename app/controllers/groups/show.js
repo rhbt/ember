@@ -2,9 +2,10 @@ import Ember from 'ember';
 
 export default Ember.Controller.extend({
 
-	loggedInUser: Ember.inject.service('user'),
+  loggedInUser: Ember.inject.service('user'),
 
-  isAdmin: Ember.computed(function() {
+
+  admin: Ember.computed(function() {
 		const that = this;
 
 		this.get('loggedInUser').get('currentUser.administrating')
@@ -12,11 +13,16 @@ export default Ember.Controller.extend({
 				const groupID = that.get('group').get('id');
 					groups.forEach(function(group) {
 						if (group.get('id') == groupID) {
-							that.set('isAdmin', true);
+							return true;
 						} 
 					})
+					return false;
 			});
-	})
+	}),
+
+  observerAdmin: Ember.observer('isAdmin', function() {
+    this.set('adminn', true);
+  })
 
 
 });
