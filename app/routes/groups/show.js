@@ -16,17 +16,19 @@ export default Ember.Route.extend({
   },
 
 	actions: {
-		createEvent: function(event) {
-			var group = this.controller.get('group');
-			var that = this;
-			group.get('events').addObject(event);
-			group.save();
-			event.set('group', group);
-			event.save().then(function() {
-				that.transitionTo('index');
-			})
 
+		createEvent: function(event) {
+			const group = this.controller.get('group');
+			const that = this;
+			group.get('events').addObject(event);
+			group.save().then(function() {
+				event.set('group', group);
+				event.save().then(function() {
+					that.transitionTo('index');
+				})
+			});
 		}
+
 	}
 
 });

@@ -3,6 +3,7 @@ import Firebase from 'firebase';
 
 export default Ember.Route.extend({
   firebaseApp: Ember.inject.service(),
+  loggedInUser: Ember.inject.service('user'),
   
   model() {
     return Ember.RSVP.hash({
@@ -25,41 +26,41 @@ export default Ember.Route.extend({
     Ember.set(controller, 'events', model.events);
   },
 
-  // model() {
-  //   return this.store.findAll('event');
-  // },
-
  	actions: {
    	facebookLogin: function(provider) {
-   		var that = this
+   		const that = this
    	  const controller = this.get('controller');
         controller.get('session')
         .open('firebase', { provider: provider})
         .then(function(data) {
 
         	const uid = data.currentUser.uid;
-        	 var userExist = that.store.find('user', uid).then(function(user){
-             
+        	 const userExist = that.store.find('user', uid).then(function(user){
+             that.get('loggedInUser').loadCurrentUser();
             }).catch(function(error){
               const displayName = data.currentUser.displayName.split(' ');
               const firstName = displayName[0];
               const lastName = displayName[1];
               
-              var user = that.store.createRecord('user', {
+              const user = that.store.createRecord('user', {
                   id: uid,
                   email: data.currentUser.email,
                   firstName: firstName,
                   lastName: lastName
                 });
-              
-                return user.save()
-                });
+                
+                return user.save().then(function() {
+                  that.get('loggedInUser').loadCurrentUser();
+                })
+              });
         });
       },
 
       signUp() {
+        const controller = this.get('controller');
+
         const auth = this.get('firebaseApp').auth();
-        auth.createUserWithEmailAndPassword(this.get('email'), this.get('password')).
+        auth.createUserWithEmailAndPassword(controller.get('email'), controller.get('password')).
         then((userResponse) => {
           const user = this.store.createRecord('user', {
             id: userResponse.uid,

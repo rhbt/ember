@@ -9,9 +9,9 @@ export default Ember.Route.extend({
 	actions: {
 		createGroup: function(newGroup) {
 
-			var uid = this.get('session').get('uid');
-			var that = this;
-			var user = this.store.find('user', uid).then(function(user) {
+			const that = this;
+			const uid = this.get('session').get('uid');
+			const user = this.store.find('user', uid).then(function(user) {
 				newGroup.get('admins').addObject(user);
 				user.get('administrating').addObject(newGroup);
 				user.save();
@@ -26,3 +26,4 @@ export default Ember.Route.extend({
 	}
 
 });
+

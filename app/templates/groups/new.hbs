@@ -25,7 +25,7 @@
 			<label>Description</label>
 			{{textarea rows='4' value=model.description class='form-control' placeholder='Describe what the purpose of your group is'}}
 			</div>
-			<button class='btn btn-primary' {{action 'createGroup' model}}> Create group </button>
+			<button class='btn btn-primary' {{action 'createGroup' model on='submit'}}> Create group </button>
 			</form>
 			</section>
 		</div>
