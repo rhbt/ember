@@ -1,7 +1,14 @@
-<div class='col-md-offset-3 col-md-6 text-center user-feed-container'>
-	<div class='user-feed-item'>USER FEED HELL YEA</div>
+<div class='col-md-offset-3 col-md-6 user-feed-container'>
+	
 	{{#each events as |event|}}
-	{{#link-to 'events.show' event.id}}{{event.name}}{{/link-to}} <br>
-	{{event.description}} <br>
+	<div class='user-feed-item'>
+	<div class='group-profile-pic'></div>
+	<h3 class='group-header'>{{event.group.name}} <small>- created an event</small> </h3> 
+	<p> Yesterday at 11:29 am </p>
+
+	<h3 class='event-name'>{{#link-to 'events.show' event.id}}{{event.name}}{{/link-to}}</h3>
+	<div class='event-descrip'>{{event.description}}</div>
+	</div>
 	{{/each}}
+	
 </div>

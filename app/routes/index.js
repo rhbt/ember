@@ -6,16 +6,11 @@ export default Ember.Route.extend({
   loggedInUser: Ember.inject.service('user'),
   
   model() {
+    const uid = this.get('session').get('uid');
+    const user = uid ? this.store.find('user', uid) : null;
+
     return Ember.RSVP.hash({
-      user: function(){
-        const uid = this.get('session').get('uid');
-        if (uid) {
-          console.log(uid);
-          return this.store.find('user', uid);
-        } else {
-          return null;
-        }
-      },
+      user: user,
       events: this.store.findAll('event')
     });
   },
@@ -23,6 +18,7 @@ export default Ember.Route.extend({
   setupController(controller, model) {
     this._super(...arguments);
     Ember.set(controller, 'user', model.user);
+    console.log(model.user);
     Ember.set(controller, 'events', model.events);
   },
 

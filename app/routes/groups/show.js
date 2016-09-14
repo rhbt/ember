@@ -11,26 +11,46 @@ export default Ember.Route.extend({
     });
   },
 
+    deactivate: function() {
+	    const event = this.controller.get('event');
+	    event.rollbackAttributes();
+  	},
+
   setupController(controller, model) {
     this._super(...arguments);
     Ember.set(controller, 'group', model.group);
     Ember.set(controller, 'event', model.event);
     const that = this;
-		this.get('loggedInUser').get('currentUser.administrating')
-			.then(function(groups) {
-				let setToTrue;
-				const groupID = that.controller.get('group').get('id');
-					groups.forEach(function(group) {
-						if (group.get('id') == groupID) {
-							Ember.set(controller, 'isAdmin', true);
-							setToTrue = true;
-						} 
-					})
-				if (!setToTrue) {
-					Ember.set(controller, 'isAdmin', false);
-				}
-			});
-  },
+	this.get('loggedInUser').get('currentUser.administrating')
+		.then(function(groups) {
+			let setToTrue;
+			const groupID = that.controller.get('group').get('id');
+				groups.forEach(function(group) {
+					if (group.get('id') == groupID) {
+						Ember.set(controller, 'isAdmin', true);
+						setToTrue = true;
+					} 
+				})
+			if (!setToTrue) {
+				Ember.set(controller, 'isAdmin', false);
+			}
+		});
+
+	this.get('loggedInUser').get('currentUser.memberships')
+		.then(function(groups) {
+			let setToTrue;
+			const groupID = that.controller.get('group').get('id');
+				groups.forEach(function(group) {
+					if (group.get('id') == groupID) {
+						Ember.set(controller, 'notMember', false);
+						setToTrue = true;
+					} 
+				})
+			if (!setToTrue) {
+				Ember.set(controller, 'notMember', true);
+			}
+		});
+    },
 
 	actions: {
 
@@ -44,6 +64,15 @@ export default Ember.Route.extend({
 					that.transitionTo('index');
 				})
 			});
+		},
+
+		joinGroup: function(group) {
+			this.controller.set('notMember', false)
+			let user = this.get('loggedInUser').get('currentUser');
+			group.get('members').addObject(user);
+			user.get('memberships').addObject(group);
+			user.save();
+			group.save();
 		}
 
 

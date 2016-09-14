@@ -1,27 +1,28 @@
 <nav class='navbar navbar-default navbar-fixed-top' role='navigation'>
 	<div class='container'>
 		<div class='row'>
+
 			<div class='col-md-4'>
-		    <div class='navbar-header'>
-		      <div class='navbar-brand'>
-		        {{#link-to 'index'}}Title Here{{/link-to}}
-		      </div>
-		    </div>
+			    <div class='navbar-header'>
+			      <div class='navbar-brand'>
+			        {{#link-to 'index'}}Title Here{{/link-to}}
+			      </div>
+			    </div>
 			</div>
 
 			<div class='col-md-4'>
 				<form>
-		        {{input type='text' value=search class='form-control text-center' placeholder='Search'}}
-		    </form>
+		        	{{input type='text' value=search class='form-control text-center' placeholder='Search'}}
+		    	</form>
 			</div>
 
 			{{#if session.isAuthenticated}}
 			<div class='col-md-4'>
-	      	<ul class="nav navbar-nav navbar-right">
-	      		<li>{{#link-to 'groups.index'}}<img src='/assets/images/discover.png' id='nav-icon'>{{/link-to}}</li>
-	      		<li>{{#link-to 'users.show' session.currentUser.uid}}<img src='/assets/images/user.png' id='nav-icon'>{{/link-to}}</li>
-	      		<li><a href='#' {{action 'signOut'}}><img src='/assets/images/logout.png' id='nav-icon'></a></li>
-         	</ul>
+		      	<ul class="nav navbar-nav navbar-right">
+		      		<li>{{#link-to 'groups.index'}}<img src='/assets/images/discover.png' id='nav-icon'>{{/link-to}}</li>
+		      		<li>{{#link-to 'users.show' session.currentUser.uid}}<img src='/assets/images/user.png' id='nav-icon'>{{/link-to}}</li>
+		      		<li><a href='#' {{action 'signOut'}}><img src='/assets/images/logout.png' id='nav-icon'></a></li>
+	         	</ul>
 			</div>
 			{{/if}}
 

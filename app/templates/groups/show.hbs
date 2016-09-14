@@ -24,6 +24,10 @@
 
 		{{/if}}
 
+		{{#if notMember}}
+		<button class='btn btn-primary' {{action 'joinGroup' group}}> Join group </button>
+		{{/if}}
+
 		{{#each group.events as |event|}} 
 
 		{{#link-to 'events.show' event.id}}{{event.name}}{{/link-to}} <br>

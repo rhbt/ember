@@ -1,7 +1,17 @@
 {{model.firstName}}
 <br>
-{{#each model.administrating as |adminOfGroup|}} 
 
-{{adminOfGroup.name}}
+<h1>Groups you are admin of</h1>
+{{#each model.administrating as |group|}} 
+
+{{group.name}}
+
+{{/each}}
+
+<h1>Your groups</h1>
+
+{{#each model.memberships as |group|}} 
+
+{{group.name}}
 
 {{/each}}
