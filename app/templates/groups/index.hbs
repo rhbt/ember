@@ -1,6 +1,8 @@
-{{#each model as |group index|}}
-{{index}}
-{{#link-to 'groups.show' group.id}}{{group.name}}{{/link-to}} <br>
-
+{{#each groupChunks as |groups|}}
+  <div class='row'>
+    {{#each groups as |group|}}
+    	{{groups/group-panel group=group memberships=memberships}}
+		{{/each}}
+  </div>
 {{/each}}
 

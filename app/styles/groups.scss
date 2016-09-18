@@ -1,0 +1,71 @@
+.group-panel {
+	margin-top: 10%;
+	background-color: white;
+	height: 250px;
+
+	.panel-pic {
+		display: block;
+		width: 100%;
+	    height: 142px;
+	    background: url('https://placekitten.com/600/250') no-repeat center;
+	    background-size: cover;
+	}
+
+	h3 {
+		margin: 1.5% 0 0 2.5%;
+		font-size: 17px;
+		font-weight: 700;
+		color: $light-blue;
+	}
+
+	p {
+		margin: 0 0 2.5% 2.5%;
+	}
+
+	button {
+		margin-left: 2.5%;
+	}
+}
+
+.group-banner {
+	width: 100%;
+	height: 250px;
+	background: url('https://placekitten.com/1000/600') no-repeat center;
+	background-size: cover;	
+	border-left: 1px solid $light-grey;
+	border-right: 1px solid $light-grey;
+}
+
+.group-info {
+	background-color: white;
+	border: 1px solid $light-grey;
+
+	h1 {
+		margin: 5% 0 0 5%;
+	}
+	p {
+		margin: 1% 0 0 5%;
+	}
+}
+
+
+.vertical-alignment-helper {
+    display:table;
+    height: 100%;
+    width: 100%;
+    pointer-events:none;
+}
+.vertical-align-center {
+    /* To center vertically */
+    display: table-cell;
+    vertical-align: middle;
+    pointer-events:none;
+}
+.modal-content {
+    /* Bootstrap sets the size of the modal in the modal-dialog class, we need to inherit it */
+    width:inherit;
+    height:inherit;
+    /* To center horizontally */
+    margin: 0 auto;
+    pointer-events:all;
+}

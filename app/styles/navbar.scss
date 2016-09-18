@@ -27,12 +27,17 @@
 .navbar-right {
 	margin-top: 15px;
 	
-	li {
+	li{
 		margin: 0 5px;
 	}
 }
 
-#nav-icon {
+.nav-icon, #log-out-icon {
 	height: 25px;
 	width: 25px;
+}
+
+
+#log-out-icon {
+	margin-top: 15px;
 }

@@ -1,0 +1,17 @@
+<div class='col-md-3'>
+	<div class='group-panel'>
+		{{#link-to 'groups.show' group.id class='panel-pic'}}{{/link-to}}
+		{{#link-to 'groups.show' group.id }}<h3>{{group.name}}</h3>{{/link-to}}
+		<p>{{group.members.length}} members</p>
+		
+		{{#if (findGroup memberships group.id)}}
+		{{#if notMember}}
+		<button class='btn btn-link text-left' {{action 'joinGroup' group}}> Join group </button>
+		{{else}}
+		<p>MEMBER</p>
+		{{/if}}
+		{{else}}
+		<p>MEMBER</p>
+		{{/if}}
+	</div>
+</div>

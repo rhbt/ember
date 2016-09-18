@@ -5,11 +5,11 @@ export default Ember.Route.extend({
 	loggedInUser: Ember.inject.service('user'),
 
 	model(params) {
-    return Ember.RSVP.hash({
-      group: this.store.find('group', params.group_id),
-      event: this.store.createRecord('event')
-    });
-  },
+	    return Ember.RSVP.hash({
+	      group: this.store.find('group', params.group_id),
+	      event: this.store.createRecord('event')
+	    });
+  	},
 
     deactivate: function() {
 	    const event = this.controller.get('event');
@@ -17,14 +17,15 @@ export default Ember.Route.extend({
   	},
 
   setupController(controller, model) {
+
     this._super(...arguments);
     Ember.set(controller, 'group', model.group);
     Ember.set(controller, 'event', model.event);
-    const that = this;
+
 	this.get('loggedInUser').get('currentUser.administrating')
 		.then(function(groups) {
 			let setToTrue;
-			const groupID = that.controller.get('group').get('id');
+			const groupID = controller.get('group').get('id');
 				groups.forEach(function(group) {
 					if (group.get('id') == groupID) {
 						Ember.set(controller, 'isAdmin', true);
@@ -39,7 +40,7 @@ export default Ember.Route.extend({
 	this.get('loggedInUser').get('currentUser.memberships')
 		.then(function(groups) {
 			let setToTrue;
-			const groupID = that.controller.get('group').get('id');
+			const groupID = controller.get('group').get('id');
 				groups.forEach(function(group) {
 					if (group.get('id') == groupID) {
 						Ember.set(controller, 'notMember', false);

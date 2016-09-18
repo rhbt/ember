@@ -1,31 +1,53 @@
 <div class='row'>
-	<div class='col-md-offset-1 col-md-10'>
-
-		{{#if isAdmin}}
-		<div class='event-form'>
-
-			<h1>Create event for {{group.name}}</h1>
-
-			<form>
-			<div class='form-group'>
-			<label>Event name</label>
-			{{input type='text' value=event.name class='form-control'}}
-			</div>
-
-
-			<div class='form-group'>
-			<label>Description</label>
-			{{textarea rows='4' value=event.description class='form-control' placeholder='Describe the event'}}
-			</div>
-			<button class='btn btn-primary' {{action 'createEvent' event}}> Create group </button>
-			</form>
-
+	<div class='col-md-offset-2 col-md-8'>
+		<div class='group-banner'></div>
+		<div class='group-info'>
+		<h1>{{group.name}}</h1>
+		<p>{{group.members.length}} members</p>
 		</div>
 
-		{{/if}}
+{{#if isAdmin}}
+<button class='btn btn-primary btn-lg' data-toggle='modal' data-target='#myModal'>Launch demo modal</button>
+
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop='static'>
+    <div class="vertical-alignment-helper">
+        <div class="modal-dialog vertical-align-center">
+            <div class="modal-content">
+        		<div class="modal-header">
+          			<button type="button" class="close" data-dismiss="modal">&times;</button>
+
+          			<h4 class="modal-title">Create an Event</h4>
+        		</div>
+        		
+        		<div class="modal-body">
+        
+					<form>
+					<div class='form-group'>
+					<label>Event name</label>
+					{{input type='text' value=event.name class='form-control'}}
+					</div>
+
+					<div class='form-group'>
+					<label>Description</label>
+					{{textarea rows='4' value=event.description class='form-control' placeholder='Describe the event'}}
+					</div>
+					<button class='btn btn-primary' data-dismiss='modal' {{action 'createEvent' event}}> Create group </button>
+					</form>
+
+        		</div>
+	        	<div class="modal-footer">
+	          		<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	       		</div>
+      		</div>
+        </div>
+    </div>
+</div>
+{{/if}}
+		
 
 		{{#if notMember}}
-		<button class='btn btn-primary' {{action 'joinGroup' group}}> Join group </button>
+		<button class='btn btn-primary text-left' {{action 'joinGroup' group}}> Join group </button>
 		{{/if}}
 
 		{{#each group.events as |event|}} 

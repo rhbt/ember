@@ -18,7 +18,6 @@ export default Ember.Route.extend({
   setupController(controller, model) {
     this._super(...arguments);
     Ember.set(controller, 'user', model.user);
-    console.log(model.user);
     Ember.set(controller, 'events', model.events);
   },
 

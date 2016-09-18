@@ -19,9 +19,9 @@
 			{{#if session.isAuthenticated}}
 			<div class='col-md-4'>
 		      	<ul class="nav navbar-nav navbar-right">
-		      		<li>{{#link-to 'groups.index'}}<img src='/assets/images/discover.png' id='nav-icon'>{{/link-to}}</li>
-		      		<li>{{#link-to 'users.show' session.currentUser.uid}}<img src='/assets/images/user.png' id='nav-icon'>{{/link-to}}</li>
-		      		<li><a href='#' {{action 'signOut'}}><img src='/assets/images/logout.png' id='nav-icon'></a></li>
+		      		<li>{{#link-to 'groups.index'}}<img src='/assets/images/discover.png' class='nav-icon'>{{/link-to}}</li>
+		      		<li>{{#link-to 'users.show' session.currentUser.uid}}<img src='/assets/images/user.png' class='nav-icon'>{{/link-to}}</li>
+		      		<li style='margin-left: 15px;'><input type="image" src="/assets/images/logout.png" name="saveForm" data-toggle='modal' data-target='#logout-modal' id='log-out-icon' /></li>
 	         	</ul>
 			</div>
 			{{/if}}
@@ -29,3 +29,17 @@
 		</div>
 	</div>
 </nav>
+
+<div class="modal fade" id='logout-modal' tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="vertical-alignment-helper">
+        <div class="modal-dialog vertical-align-center">
+            <div class="modal-content modal-logout">
+        		<div class="modal-body">
+					<button class='btn btn-default' data-dismiss='modal' {{action 'signOut'}}> Log out </button>
+					<hr>
+	          		<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+	          	</div>
+      		</div>
+        </div>
+    </div>
+</div>
