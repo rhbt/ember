@@ -22,7 +22,26 @@ export default Ember.Controller.extend({
 
 	  setLoginStatus: function(status) {
 	  	this.set('isLoggingIn', status);
-	  }
+	  },
+
+
+
+    createGroup: function(newGroup) {
+      const that = this;
+      const uid = this.get('session').get('uid');
+      const user = this.store.find('user', uid).then(function(user) {
+        newGroup.get('admins').addObject(user);
+        newGroup.get('members').addObject(user);
+        user.get('administrating').addObject(newGroup);
+        user.get('memberships').addObject(newGroup);
+        user.save();
+      })
+        .then(function() {
+          newGroup.save()
+            .then(function(newGroup){
+              that.transitionToRoute('index')});
+        });
+    }    
 
 	}	
 	

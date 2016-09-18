@@ -1,4 +1,6 @@
 <div class='col-md-3 user-sidebar'>
+
+
 	<h2>Your Groups</h2>
 	<hr>
 
@@ -12,6 +14,8 @@
 
 
 	<hr>
-	<div class='sidebar-option'>{{#link-to 'groups.new'}}<img src='/assets/images/plus-grey.png'> Create a Group {{/link-to}}</div>
+	<div class='sidebar-option'><a href='' data-target="#myModal" data-toggle="modal"><img src='/assets/images/plus-grey.png'> Create a Group</a></div>
 	<div class='sidebar-option'>{{#link-to 'groups.index'}}<img src='/assets/images/discover-grey.png'> Discover New Groups {{/link-to}}</div>
 </div>
+
+{{partial 'group-form'}}

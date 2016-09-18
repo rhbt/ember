@@ -1,0 +1,34 @@
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop='static'>
+    <div class="vertical-alignment-helper">
+        <div class="modal-dialog vertical-align-center">
+            <div class="modal-content">
+        		<div class="modal-header">
+          			<button type="button" class="close" data-dismiss="modal">&times;</button>
+
+          			<h4 class="modal-title">Create a Group</h4>
+        		</div>
+        		
+        		<div class="modal-body">
+        
+					<form>
+					<div class='form-group'>
+					<label>Group name</label>
+					{{input type='text' value=group.name class='form-control'}}
+					</div>
+
+					<div class='form-group'>
+					<label>Description</label>
+					{{textarea rows='4' value=group.description class='form-control' placeholder='Describe the event'}}
+					</div>
+
+					<button class='btn btn-primary' data-dismiss='modal' {{action test group}}> Create group </button>
+					</form>
+
+        		</div>
+	        	<div class="modal-footer">
+	          		<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	       		</div>
+      		</div>
+        </div>
+    </div>
+</div>

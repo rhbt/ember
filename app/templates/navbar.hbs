@@ -21,7 +21,7 @@
 		      	<ul class="nav navbar-nav navbar-right">
 		      		<li>{{#link-to 'groups.index'}}<img src='/assets/images/discover.png' class='nav-icon'>{{/link-to}}</li>
 		      		<li>{{#link-to 'users.show' session.currentUser.uid}}<img src='/assets/images/user.png' class='nav-icon'>{{/link-to}}</li>
-		      		<li style='margin-left: 15px;'><input type="image" src="/assets/images/logout.png" name="saveForm" data-toggle='modal' data-target='#logout-modal' id='log-out-icon' /></li>
+		      		<li><a href='' data-toggle='modal' data-target='#logout-modal'><img src="/assets/images/logout.png" class='nav-icon'></a></li>
 	         	</ul>
 			</div>
 			{{/if}}

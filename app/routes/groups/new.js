@@ -13,7 +13,7 @@ export default Ember.Route.extend({
 
 	actions: {
 		createGroup: function(newGroup) {
-
+			console.log('entered');
 			const that = this;
 			const uid = this.get('session').get('uid');
 			const user = this.store.find('user', uid).then(function(user) {

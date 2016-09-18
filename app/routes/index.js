@@ -11,7 +11,8 @@ export default Ember.Route.extend({
 
     return Ember.RSVP.hash({
       user: user,
-      events: this.store.findAll('event')
+      events: this.store.findAll('event'),
+      group: this.store.createRecord('group')
     });
   },
 
@@ -19,6 +20,7 @@ export default Ember.Route.extend({
     this._super(...arguments);
     Ember.set(controller, 'user', model.user);
     Ember.set(controller, 'events', model.events);
+    Ember.set(controller, 'group', model.group);
   },
 
  	actions: {
@@ -64,6 +66,24 @@ export default Ember.Route.extend({
           return user.save();
         });
       }
-   	}
+   	},
+
+    createGroup: function(newGroup) {
+
+      const that = this;
+      const uid = this.get('session').get('uid');
+      const user = this.store.find('user', uid).then(function(user) {
+        newGroup.get('admins').addObject(user);
+        newGroup.get('members').addObject(user);
+        user.get('administrating').addObject(newGroup);
+        user.get('memberships').addObject(newGroup);
+        user.save();
+      })
+        .then(function() {
+          newGroup.save()
+            .then(function(newGroup){
+              that.transitionTo('index')});
+        });
+    },
   
 });
