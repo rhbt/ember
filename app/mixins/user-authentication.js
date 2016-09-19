@@ -9,7 +9,7 @@ export default Ember.Mixin.create({
    	  const that = this;
    	  this.get('loggedInUser').set('currentUser', null);
       this.get('session').close().then(function() {
-      	that.transitionTo('index');
+      	that.transitionToRoute('index');
       });
   	}
   	

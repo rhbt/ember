@@ -16,6 +16,11 @@ export default Ember.Route.extend({
     });
   },
 
+  deactivate: function() {
+    const group = this.controller.get('group');
+    group.rollbackAttributes();
+  },
+
   setupController(controller, model) {
     this._super(...arguments);
     Ember.set(controller, 'user', model.user);
