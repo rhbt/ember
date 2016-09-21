@@ -83,7 +83,7 @@
 <div class='row'>
 	<div class='col-md-offset-2 col-md-8'>
 
-		{{#each comments as |comment|}}
+		{{#each group.comments as |comment|}}
 			{{#if comment.user}}
 			{{comment.user.firstName}} - {{comment.content}} <br>
 			{{/if}}

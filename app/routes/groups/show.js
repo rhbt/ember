@@ -8,8 +8,7 @@ export default Ember.Route.extend({
 	    return Ember.RSVP.hash({
 	      group: this.store.find('group', params.group_id),
 	      event: this.store.createRecord('event'),
-	      comment: this.store.createRecord('comment'),
-	      comments: this.store.findAll('comment')
+	      comment: this.store.createRecord('comment')
 	    });
   	},
 
@@ -24,7 +23,6 @@ export default Ember.Route.extend({
     Ember.set(controller, 'group', model.group);
     Ember.set(controller, 'event', model.event);
     Ember.set(controller, 'comment', model.comment);
-    Ember.set(controller, 'comments', model.comments);
 
     console.log(this.controller.get('group'));
 	this.get('loggedInUser').get('currentUser.administrating')
