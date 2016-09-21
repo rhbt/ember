@@ -1,5 +1,5 @@
 import Ember from 'ember';
-
+import _array from 'lodash/array';
 export default Ember.Route.extend({
 
 	loggedInUser: Ember.inject.service('user'),
@@ -7,7 +7,9 @@ export default Ember.Route.extend({
 	model(params) {
 	    return Ember.RSVP.hash({
 	      group: this.store.find('group', params.group_id),
-	      event: this.store.createRecord('event')
+	      event: this.store.createRecord('event'),
+	      comment: this.store.createRecord('comment'),
+	      comments: this.store.findAll('comment')
 	    });
   	},
 
@@ -21,7 +23,10 @@ export default Ember.Route.extend({
     this._super(...arguments);
     Ember.set(controller, 'group', model.group);
     Ember.set(controller, 'event', model.event);
+    Ember.set(controller, 'comment', model.comment);
+    Ember.set(controller, 'comments', model.comments);
 
+    console.log(this.controller.get('group'));
 	this.get('loggedInUser').get('currentUser.administrating')
 		.then(function(groups) {
 			let setToTrue;
@@ -74,6 +79,23 @@ export default Ember.Route.extend({
 			user.get('memberships').addObject(group);
 			user.save();
 			group.save();
+		},
+
+		postComment: function(comment) {
+			const that = this;
+			const user = this.get('loggedInUser').get('currentUser');
+			const group = this.controller.get('group');
+			group.get('comments').addObject(comment);
+			console.log(comment.get('content'));
+
+			comment.set('user', user);
+			comment.set('group', group);
+			comment.set('content', this.controller.get('content'));
+			comment.save();
+			group.save().then(function() {
+				that.refresh();
+			});
+
 		}
 
 

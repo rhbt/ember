@@ -7,7 +7,6 @@ export default Ember.Route.extend(JoinGroup, {
   loggedInUser: Ember.inject.service('user'),
 
   model() {
-    console.log('ran');
     const uid = this.get('session').get('uid');
     const user = uid ? this.store.find('user', uid) : null;
     return Ember.RSVP.hash({
@@ -20,7 +19,7 @@ export default Ember.Route.extend(JoinGroup, {
     this._super(...arguments);
     Ember.set(controller, 'user', model.user);
     let groupChunks = _array.chunk(model.groups.toArray(), 4)
-    // Ember.set(controller, 'groups', model.groups);
+    Ember.set(controller, 'groups', model.groups);
     Ember.set(controller, 'groupChunks', groupChunks);
     const user = model.user;
     const groups = user.get('memberships').then(function(groups){

@@ -6,6 +6,7 @@
 		<p>{{group.members.length}} members</p>
 		</div>
 
+
 {{#if isAdmin}}
 <button class='btn btn-primary btn-lg' data-toggle='modal' data-target='#myModal'>Launch demo modal</button>
 
@@ -26,6 +27,11 @@
 					<div class='form-group'>
 					<label>Event name</label>
 					{{input type='text' value=event.name class='form-control'}}
+					</div>
+
+					<div class='form-group'>
+					<label>Location</label>
+					{{input type='text' value=event.location class='form-control'}}
 					</div>
 
 					<div class='form-group'>
@@ -59,5 +65,28 @@
 	</div>
 </div>
 
+<div class='row'>
+	<div class='col-md-offset-2 col-md-8'>
 
+		<form>
 
+			<div class='form-group'>
+			<label>Comment</label>
+			{{textarea rows='4' value=content class='form-control' placeholder='Write a comment'}}
+
+			<button class='btn btn-primary' {{action 'postComment' comment group}}> Comment </button>
+			</div>
+		</form>
+	</div>
+</div>
+
+<div class='row'>
+	<div class='col-md-offset-2 col-md-8'>
+
+		{{#each comments as |comment|}}
+			{{#if comment.user}}
+			{{comment.user.firstName}} - {{comment.content}} <br>
+			{{/if}}
+		{{/each}}
+	</div>
+</div>
