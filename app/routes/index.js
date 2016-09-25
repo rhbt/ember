@@ -4,6 +4,7 @@ import Firebase from 'firebase';
 export default Ember.Route.extend({
   firebaseApp: Ember.inject.service(),
   loggedInUser: Ember.inject.service('user'),
+  session: Ember.inject.service('session'),
   
   model() {
     const uid = this.get('session').get('uid');
@@ -18,6 +19,7 @@ export default Ember.Route.extend({
 
   setupController(controller, model) {
     this._super(...arguments);
+
     Ember.set(controller, 'user', model.user);
     Ember.set(controller, 'events', model.events);
     Ember.set(controller, 'group', model.group);
@@ -25,7 +27,7 @@ export default Ember.Route.extend({
 
   deactivate: function() {
     var group = this.controller.get('group');
-    console.log(group.get('isNew'));
+
 
     this.controller.get('group').rollbackAttributes();
   },
@@ -40,7 +42,9 @@ export default Ember.Route.extend({
 
         	const uid = data.currentUser.uid;
         	 const userExist = that.store.find('user', uid).then(function(user){
+          
              that.get('loggedInUser').loadCurrentUser();
+             
             }).catch(function(error){
               const displayName = data.currentUser.displayName.split(' ');
               const firstName = displayName[0];
@@ -61,18 +65,28 @@ export default Ember.Route.extend({
       },
 
       signUp() {
-        const controller = this.get('controller');
-
+        const that = this;
+        const controller = that.get('controller');
         const auth = this.get('firebaseApp').auth();
         auth.createUserWithEmailAndPassword(controller.get('email'), controller.get('password')).
         then((userResponse) => {
-          const user = this.store.createRecord('user', {
+          const user = that.store.createRecord('user', {
             id: userResponse.uid,
+            firstName: controller.get('firstName'),
+            lastName: controller.get('lastName'),
             email: userResponse.email
           });
-          return user.save();
+
+          return user.save().then(function() {
+            that.get('session').open('firebase', 
+              { provider: 'password', email: controller.get('email'), password: controller.get('password')});
+    
+              that.get('loggedInUser').loadCurrentUser().then(function() {
+                console.log('success');
+              });
+          });
         });
-      }
+      } 
    	},
 
     createGroup: function(newGroup) {
@@ -95,7 +109,6 @@ export default Ember.Route.extend({
 
     willTransition() {
       var group = this.controller.get('group');
-      console.log(group.get('isNew'));
       this.controller.get('group').rollbackAttributes();
  
     }

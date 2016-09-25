@@ -7,8 +7,7 @@ export default Ember.Route.extend({
 	model(params) {
 	    return Ember.RSVP.hash({
 	      group: this.store.find('group', params.group_id),
-	      event: this.store.createRecord('event'),
-	      comment: this.store.createRecord('comment')
+	      event: this.store.createRecord('event')
 	    });
   	},
 
@@ -22,9 +21,11 @@ export default Ember.Route.extend({
     this._super(...arguments);
     Ember.set(controller, 'group', model.group);
     Ember.set(controller, 'event', model.event);
-    Ember.set(controller, 'comment', model.comment);
-
-    console.log(this.controller.get('group'));
+    // let currentUser = this.get('loggedInUser').get('currentUser') 
+    // console.log('uid')
+    // console.log(this.get('session').get('uid'));
+    // console.log('currentUser')
+    // console.log(currentUser);
 	this.get('loggedInUser').get('currentUser.administrating')
 		.then(function(groups) {
 			let setToTrue;
@@ -38,6 +39,9 @@ export default Ember.Route.extend({
 			if (!setToTrue) {
 				Ember.set(controller, 'isAdmin', false);
 			}
+		return groups;
+		}, function(reason) {
+			Ember.set(controller, 'isAdmin', false);
 		});
 
 	this.get('loggedInUser').get('currentUser.memberships')
@@ -53,6 +57,9 @@ export default Ember.Route.extend({
 			if (!setToTrue) {
 				Ember.set(controller, 'notMember', true);
 			}
+		return groups;
+		}, function(reason) {
+			Ember.set(controller, 'notMember', true);
 		});
     },
 
@@ -79,21 +86,21 @@ export default Ember.Route.extend({
 			group.save();
 		},
 
-		postComment: function(comment) {
+		postComment: function(content, group) {
 			const that = this;
 			const user = this.get('loggedInUser').get('currentUser');
-			const group = this.controller.get('group');
-			group.get('comments').addObject(comment);
-			console.log(comment.get('content'));
-
-			comment.set('user', user);
-			comment.set('group', group);
-			comment.set('content', this.controller.get('content'));
-			comment.save();
-			group.save().then(function() {
-				that.refresh();
+			let comment = this.store.createRecord('comment', {
+				content: content,
+				timestamp: new Date().getTime(),
+				group: group,
+				user: user
 			});
-
+			comment.save().then(function() {
+				group.get('comments').addObject(comment);
+				group.save().then(function() {
+					that.controller.set('content', '');
+				});
+			})
 		}
 
 

@@ -7,25 +7,29 @@ export default Ember.Route.extend(JoinGroup, {
   loggedInUser: Ember.inject.service('user'),
 
   model() {
+    const that = this;
     const uid = this.get('session').get('uid');
-    const user = uid ? this.store.find('user', uid) : null;
+    // const user = uid ? this.store.find('user', uid) : null;
+
     return Ember.RSVP.hash({
-      user: user,
+      user: this.store.find('user', uid),
       groups: this.store.findAll('group')
     });
+    
   },
 
   setupController(controller, model) {
     this._super(...arguments);
     Ember.set(controller, 'user', model.user);
-    let groupChunks = _array.chunk(model.groups.toArray(), 4)
+
+    // // let groupChunks = _array.chunk(model.groups.toArray(), 4)
+    // // console.log(groupChunks);
     Ember.set(controller, 'groups', model.groups);
-    Ember.set(controller, 'groupChunks', groupChunks);
+    // // Ember.set(controller, 'groupChunks', groupChunks);
     const user = model.user;
-    const groups = user.get('memberships').then(function(groups){
-    	Ember.set(controller, 'memberships', groups);
+    const memberships = user.get('memberships').then(function(memberships){
+    	Ember.set(controller, 'memberships', memberships);
     });
-    
   },
 
   actions: {

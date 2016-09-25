@@ -56,15 +56,24 @@
 		<button class='btn btn-primary text-left' {{action 'joinGroup' group}}> Join group </button>
 		{{/if}}
 
+
+<button class='btn btn-primary' {{action 'showDiscussion' true}}> Discussion </button>
+<button class='btn btn-primary' {{action 'showDiscussion' false}}> Events </button>
+
+{{#unless showDiscussion}}
+<br>
 		{{#each group.events as |event|}} 
 
 		{{#link-to 'events.show' event.id}}{{event.name}}{{/link-to}} <br>
 
 		{{/each}}
 
+{{/unless}}
+
 	</div>
 </div>
 
+{{#if showDiscussion}}
 <div class='row'>
 	<div class='col-md-offset-2 col-md-8'>
 
@@ -74,7 +83,7 @@
 			<label>Comment</label>
 			{{textarea rows='4' value=content class='form-control' placeholder='Write a comment'}}
 
-			<button class='btn btn-primary' {{action 'postComment' comment group}}> Comment </button>
+			<button class='btn btn-primary' {{action 'postComment' content group}}> Comment </button>
 			</div>
 		</form>
 	</div>
@@ -83,10 +92,12 @@
 <div class='row'>
 	<div class='col-md-offset-2 col-md-8'>
 
-		{{#each group.comments as |comment|}}
+		{{#each comments as |comment|}}
+
 			{{#if comment.user}}
 			{{comment.user.firstName}} - {{comment.content}} <br>
 			{{/if}}
 		{{/each}}
 	</div>
 </div>
+{{/if}}
