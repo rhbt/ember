@@ -7,6 +7,7 @@ export default Ember.Route.extend({
   session: Ember.inject.service('session'),
   
   model() {
+    this.get('loggedInUser').loadCurrentUser();
     const uid = this.get('session').get('uid');
     const user = uid ? this.store.find('user', uid) : null;
 
@@ -79,11 +80,13 @@ export default Ember.Route.extend({
 
           return user.save().then(function() {
             that.get('session').open('firebase', 
-              { provider: 'password', email: controller.get('email'), password: controller.get('password')});
-    
-              that.get('loggedInUser').loadCurrentUser().then(function() {
-                console.log('success');
+              { provider: 'password', email: controller.get('email'), password: controller.get('password')}).then(function() {
+                that.get('loggedInUser').loadCurrentUser();
               });
+          
+              
+              
+              
           });
         });
       } 

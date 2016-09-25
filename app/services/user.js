@@ -13,6 +13,8 @@ export default Ember.Service.extend({
       if (!Ember.isEmpty(uid)) {
         return this.get('store').find('user', uid).then((user) => {
           this.set('currentUser', user);
+          console.log('currentUser id:');
+          console.log(user.get('id'));
           resolve();
         }, reject);
       } else {
