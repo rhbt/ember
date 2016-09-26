@@ -11,7 +11,7 @@ export default {
       });
     };
 
-    (function(d, s, id){
+    (function(d, s, id) {
        let js, fjs = d.getElementsByTagName(s)[0];
        if (d.getElementById(id)) {return;}
        js = d.createElement(s); js.id = id;
@@ -21,4 +21,5 @@ export default {
 
     window.fbAsyncInit = fbAsyncInit;
   }
+  
 };
