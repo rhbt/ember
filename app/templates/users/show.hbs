@@ -1,17 +1,21 @@
-{{model.firstName}}
-<br>
+<div class='row'>
+	<div class='col-md-offset-2 col-md-10'>
+		<img src='/assets/images/group-placeholder.jpg'> 
+		{{model.firstName}}
 
-<h1>Groups you are admin of</h1>
-{{#each model.administrating as |group|}} 
+		<h1>Groups you admin</h1>
+		{{#each model.administrating as |group|}} 
+		{{#link-to 'groups.show' group.id}} {{group.name}} {{/link-to}}
+		<br>
+		{{/each}}
 
-{{group.name}}
 
-{{/each}}
+		<h1>Groups memberships</h1>
+		{{#each model.memberships as |group|}} 
+		{{#link-to 'groups.show' group.id}} {{group.name}} {{/link-to}}
+		<br>
+		{{/each}}
 
-<h1>Your groups</h1>
 
-{{#each model.memberships as |group|}} 
-
-{{group.name}}
-
-{{/each}}
+	</div>
+</div>

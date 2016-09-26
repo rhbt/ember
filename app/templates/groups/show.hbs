@@ -64,7 +64,8 @@
 <br>
 		{{#each group.events as |event|}} 
 
-		{{#link-to 'events.show' event.id}}{{event.name}}{{/link-to}} <br>
+		{{events/event-panel event=event eventComment=eventComment postComment=(action 'postComment')}}
+		
 
 		{{/each}}
 
@@ -81,9 +82,9 @@
 
 			<div class='form-group'>
 			<label>Comment</label>
-			{{textarea rows='4' value=content class='form-control' placeholder='Write a comment'}}
+			{{textarea rows='4' value=groupComment class='form-control' placeholder='Write a comment'}}
 
-			<button class='btn btn-primary' {{action 'postComment' content group}}> Comment </button>
+			<button class='btn btn-primary' {{action 'postComment' groupComment group 'group'}}> Comment </button>
 			</div>
 		</form>
 	</div>

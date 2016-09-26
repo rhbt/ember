@@ -21,11 +21,7 @@ export default Ember.Route.extend({
     this._super(...arguments);
     Ember.set(controller, 'group', model.group);
     Ember.set(controller, 'event', model.event);
-    // let currentUser = this.get('loggedInUser').get('currentUser') 
-    // console.log('uid')
-    // console.log(this.get('session').get('uid'));
-    // console.log('currentUser')
-    // console.log(currentUser);
+
 	this.get('loggedInUser').get('currentUser.administrating')
 		.then(function(groups) {
 			let setToTrue;
@@ -86,19 +82,38 @@ export default Ember.Route.extend({
 			group.save();
 		},
 
-		postComment: function(content, group) {
+		postComment: function(content, commentOwner, commentType) {
 			const that = this;
 			const user = this.get('loggedInUser').get('currentUser');
-			let comment = this.store.createRecord('comment', {
+			let comment;
+			if (commentType == 'group') {
+				
+				comment = this.store.createRecord('comment', {
 				content: content,
 				timestamp: new Date().getTime(),
-				group: group,
+				group: commentOwner,
 				user: user
-			});
+				});
+			}
+			else if (commentType == 'event') {
+				comment = this.store.createRecord('comment', {
+				content: content,
+				timestamp: new Date().getTime(),
+				event: commentOwner,
+				user: user
+				});
+			}
+			
 			comment.save().then(function() {
-				group.get('comments').addObject(comment);
-				group.save().then(function() {
-					that.controller.set('content', '');
+				commentOwner.get('comments').addObject(comment);
+				commentOwner.save().then(function() {
+					if (commentType == 'group') {
+						that.controller.set('groupComment', '');
+					}
+					else if (commentType == 'event') {
+						that.controller.set('eventComment', '');
+					}
+					
 				});
 			})
 		}

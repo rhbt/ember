@@ -1,1 +1,17 @@
-{{model.name}}
+<div class='row'>
+	<div class='col-md-offset-2 col-md-8'>
+		<div class='group-banner'></div>
+		<div class='group-info'>
+		<h1>{{model.name}}</h1>
+		<p>{{model.description}} </p>
+		</div>
+
+
+		{{#each model.comments as |comment|}} 
+			<p>{{comment.user.firstName}} - {{comment.content}}</p>
+		{{/each}}
+
+		{{textarea rows='1' value=eventComment class='form-control' placeholder='Write a comment'}}
+		<button class='btn btn-primary' {{action 'postComment' eventComment model 'event'}}> Comment </button>
+	</div>
+</div>
