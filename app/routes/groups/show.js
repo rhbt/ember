@@ -16,21 +16,19 @@ export default Ember.Route.extend(CommentMixin, {
     this._super(...arguments);
     Ember.set(controller, 'group', model.group);
     Ember.set(controller, 'event', model.event);
-		const _this = this;
 
-  	function isMemberOrAdmin(p, p2) {
-  		const groupID = model.group.get('id');
-  		const a =_this.get('loggedInUser').get('currentUser.'+p);
-  		const groupIDs = a.toArray().map(function(group) {
+  	function isMemberOrAdmin(query, valueToSet) {
+  		const groups = this.get('loggedInUser').get('currentUser.'+query);
+  		const groupIDs = groups.toArray().map(function(group) {
   				return group.get('id');
   			});
-  		groupIDs.includes(groupID) ? Ember.set(controller, p2, true) 
-  		: Ember.set(controller, p2, false);
+  		groupIDs.includes(model.group.get('id')) ? Ember.set(controller, valueToSet, true) 
+  		: Ember.set(controller, valueToSet, false);
   	}
 
-  	isMemberOrAdmin('administrating', 'isAdmin');
-		isMemberOrAdmin('memberships', 'isMember');
-    },
+  	isMemberOrAdmin.call(this, 'administrating', 'isAdmin');
+		isMemberOrAdmin.call(this, 'memberships', 'isMember');
+   },
 
 	actions: {
 
@@ -56,8 +54,8 @@ export default Ember.Route.extend(CommentMixin, {
 		},
 
 		willTransition() {
-      this.controller.get('event').rollbackAttributes();
-    }
+	      this.controller.get('event').rollbackAttributes();
+	    }
 
 	}
 

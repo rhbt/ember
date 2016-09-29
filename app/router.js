@@ -12,7 +12,6 @@ Router.map(function() {
   });
 
   this.route('groups', function() {
-    this.route('new');
     this.route('show', {path: ':group_id/show'});
   });
 
