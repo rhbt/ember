@@ -7,10 +7,10 @@ export default Ember.Controller.extend({
 	 actions: {
 
 	   	signOut: function() {
-	   	  const that = this;
+	   	  const _this = this;
 	   	  this.get('loggedInUser').set('currentUser', null);
 	      this.get('session').close().then(function() {
-	      	that.transitionToRoute('index');
+	      	_this.transitionToRoute('index');
 	      });
 	  	}
 	  	

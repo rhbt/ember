@@ -1,5 +1,4 @@
 import Ember from 'ember';
-import _array from 'lodash/array';
 export default Ember.Route.extend({
 
 	loggedInUser: Ember.inject.service('user'),
@@ -11,13 +10,7 @@ export default Ember.Route.extend({
 	    });
   	},
 
-    deactivate: function() {
-	    const event = this.controller.get('event');
-	    event.rollbackAttributes();
-  	},
-
   setupController(controller, model) {
-
     this._super(...arguments);
     Ember.set(controller, 'group', model.group);
     Ember.set(controller, 'event', model.event);
@@ -27,16 +20,16 @@ export default Ember.Route.extend({
 			let setToTrue;
 			const groupID = controller.get('group').get('id');
 				groups.forEach(function(group) {
-					if (group.get('id') == groupID) {
+					if (group.get('id') === groupID) {
 						Ember.set(controller, 'isAdmin', true);
 						setToTrue = true;
 					} 
-				})
+				});
 			if (!setToTrue) {
 				Ember.set(controller, 'isAdmin', false);
 			}
 		return groups;
-		}, function(reason) {
+		}, function() {
 			Ember.set(controller, 'isAdmin', false);
 		});
 
@@ -45,16 +38,16 @@ export default Ember.Route.extend({
 			let setToTrue;
 			const groupID = controller.get('group').get('id');
 				groups.forEach(function(group) {
-					if (group.get('id') == groupID) {
+					if (group.get('id') === groupID) {
 						Ember.set(controller, 'notMember', false);
 						setToTrue = true;
 					} 
-				})
+				});
 			if (!setToTrue) {
 				Ember.set(controller, 'notMember', true);
 			}
 		return groups;
-		}, function(reason) {
+		}, function() {
 			Ember.set(controller, 'notMember', true);
 		});
     },
@@ -63,18 +56,18 @@ export default Ember.Route.extend({
 
 		createEvent: function(event) {
 			const group = this.controller.get('group');
-			const that = this;
+			const _this = this;
 			group.get('events').addObject(event);
 			group.save().then(function() {
 				event.set('group', group);
 				event.save().then(function() {
-					that.transitionTo('index');
-				})
+					_this.transitionTo('index');
+				});
 			});
 		},
 
 		joinGroup: function(group) {
-			this.controller.set('notMember', false)
+			this.controller.set('notMember', false);
 			let user = this.get('loggedInUser').get('currentUser');
 			group.get('members').addObject(user);
 			user.get('memberships').addObject(group);
@@ -82,12 +75,15 @@ export default Ember.Route.extend({
 			group.save();
 		},
 
+		willTransition() {
+      this.controller.get('event').rollbackAttributes();
+    },
+
 		postComment: function(content, commentOwner, commentType) {
-			const that = this;
+			const _this = this;
 			const user = this.get('loggedInUser').get('currentUser');
 			let comment;
-			if (commentType == 'group') {
-				
+			if (commentType === 'group') {
 				comment = this.store.createRecord('comment', {
 				content: content,
 				timestamp: new Date().getTime(),
@@ -95,7 +91,7 @@ export default Ember.Route.extend({
 				user: user
 				});
 			}
-			else if (commentType == 'event') {
+			else if (commentType === 'event') {
 				comment = this.store.createRecord('comment', {
 				content: content,
 				timestamp: new Date().getTime(),
@@ -107,17 +103,16 @@ export default Ember.Route.extend({
 			comment.save().then(function() {
 				commentOwner.get('comments').addObject(comment);
 				commentOwner.save().then(function() {
-					if (commentType == 'group') {
-						that.controller.set('groupComment', '');
+					if (commentType === 'group') {
+						_this.controller.set('groupComment', '');
 					}
-					else if (commentType == 'event') {
-						that.controller.set('eventComment', '');
+					else if (commentType === 'event') {
+						_this.controller.set('eventComment', '');
 					}
 					
 				});
-			})
+			});
 		}
-
 
 	}
 

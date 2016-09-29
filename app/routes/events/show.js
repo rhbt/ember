@@ -1,19 +1,18 @@
 import Ember from 'ember';
 
 export default Ember.Route.extend({
-
 	loggedInUser: Ember.inject.service('user'),
+
 	model: function(params) {
 		return this.store.find('event', params.event_id);
 	},
 
 	actions: {
 		postComment: function(content, commentOwner, commentType) {
-			const that = this;
+			const _this = this;
 			const user = this.get('loggedInUser').get('currentUser');
 			let comment;
-			if (commentType == 'group') {
-				
+			if (commentType === 'group') {
 				comment = this.store.createRecord('comment', {
 				content: content,
 				timestamp: new Date().getTime(),
@@ -21,7 +20,7 @@ export default Ember.Route.extend({
 				user: user
 				});
 			}
-			else if (commentType == 'event') {
+			else if (commentType === 'event') {
 				comment = this.store.createRecord('comment', {
 				content: content,
 				timestamp: new Date().getTime(),
@@ -33,15 +32,15 @@ export default Ember.Route.extend({
 			comment.save().then(function() {
 				commentOwner.get('comments').addObject(comment);
 				commentOwner.save().then(function() {
-					if (commentType == 'group') {
-						that.controller.set('groupComment', '');
+					if (commentType === 'group') {
+						_this.controller.set('groupComment', '');
 					}
-					else if (commentType == 'event') {
-						that.controller.set('eventComment', '');
+					else if (commentType === 'event') {
+						_this.controller.set('eventComment', '');
 					}
 					
 				});
-			})
+			});
 		}
 	}
 });
