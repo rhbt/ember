@@ -1,46 +1,11 @@
 import Ember from 'ember';
+import CommentMixin from '../../mixins/comment'
 
-export default Ember.Route.extend({
+export default Ember.Route.extend(CommentMixin, {
 	loggedInUser: Ember.inject.service('user'),
 
 	model: function(params) {
 		return this.store.find('event', params.event_id);
-	},
-
-	actions: {
-		postComment: function(content, commentOwner, commentType) {
-			const _this = this;
-			const user = this.get('loggedInUser').get('currentUser');
-			let comment;
-			if (commentType === 'group') {
-				comment = this.store.createRecord('comment', {
-				content: content,
-				timestamp: new Date().getTime(),
-				group: commentOwner,
-				user: user
-				});
-			}
-			else if (commentType === 'event') {
-				comment = this.store.createRecord('comment', {
-				content: content,
-				timestamp: new Date().getTime(),
-				event: commentOwner,
-				user: user
-				});
-			}
-			
-			comment.save().then(function() {
-				commentOwner.get('comments').addObject(comment);
-				commentOwner.save().then(function() {
-					if (commentType === 'group') {
-						_this.controller.set('groupComment', '');
-					}
-					else if (commentType === 'event') {
-						_this.controller.set('eventComment', '');
-					}
-					
-				});
-			});
-		}
 	}
+
 });

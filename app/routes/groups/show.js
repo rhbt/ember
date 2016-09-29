@@ -1,5 +1,7 @@
 import Ember from 'ember';
-export default Ember.Route.extend({
+import CommentMixin from '../../mixins/comment'
+
+export default Ember.Route.extend(CommentMixin, {
 
 	loggedInUser: Ember.inject.service('user'),
 
@@ -14,42 +16,20 @@ export default Ember.Route.extend({
     this._super(...arguments);
     Ember.set(controller, 'group', model.group);
     Ember.set(controller, 'event', model.event);
+		const _this = this;
 
-	this.get('loggedInUser').get('currentUser.administrating')
-		.then(function(groups) {
-			let setToTrue;
-			const groupID = controller.get('group').get('id');
-				groups.forEach(function(group) {
-					if (group.get('id') === groupID) {
-						Ember.set(controller, 'isAdmin', true);
-						setToTrue = true;
-					} 
-				});
-			if (!setToTrue) {
-				Ember.set(controller, 'isAdmin', false);
-			}
-		return groups;
-		}, function() {
-			Ember.set(controller, 'isAdmin', false);
-		});
+  	function isMemberOrAdmin(p, p2) {
+  		const groupID = model.group.get('id');
+  		const a =_this.get('loggedInUser').get('currentUser.'+p);
+  		const groupIDs = a.toArray().map(function(group) {
+  				return group.get('id');
+  			});
+  		groupIDs.includes(groupID) ? Ember.set(controller, p2, true) 
+  		: Ember.set(controller, p2, false);
+  	}
 
-	this.get('loggedInUser').get('currentUser.memberships')
-		.then(function(groups) {
-			let setToTrue;
-			const groupID = controller.get('group').get('id');
-				groups.forEach(function(group) {
-					if (group.get('id') === groupID) {
-						Ember.set(controller, 'notMember', false);
-						setToTrue = true;
-					} 
-				});
-			if (!setToTrue) {
-				Ember.set(controller, 'notMember', true);
-			}
-		return groups;
-		}, function() {
-			Ember.set(controller, 'notMember', true);
-		});
+  	isMemberOrAdmin('administrating', 'isAdmin');
+		isMemberOrAdmin('memberships', 'isMember');
     },
 
 	actions: {
@@ -67,7 +47,7 @@ export default Ember.Route.extend({
 		},
 
 		joinGroup: function(group) {
-			this.controller.set('notMember', false);
+			this.controller.set('isMember', true);
 			let user = this.get('loggedInUser').get('currentUser');
 			group.get('members').addObject(user);
 			user.get('memberships').addObject(group);
@@ -77,42 +57,7 @@ export default Ember.Route.extend({
 
 		willTransition() {
       this.controller.get('event').rollbackAttributes();
-    },
-
-		postComment: function(content, commentOwner, commentType) {
-			const _this = this;
-			const user = this.get('loggedInUser').get('currentUser');
-			let comment;
-			if (commentType === 'group') {
-				comment = this.store.createRecord('comment', {
-				content: content,
-				timestamp: new Date().getTime(),
-				group: commentOwner,
-				user: user
-				});
-			}
-			else if (commentType === 'event') {
-				comment = this.store.createRecord('comment', {
-				content: content,
-				timestamp: new Date().getTime(),
-				event: commentOwner,
-				user: user
-				});
-			}
-			
-			comment.save().then(function() {
-				commentOwner.get('comments').addObject(comment);
-				commentOwner.save().then(function() {
-					if (commentType === 'group') {
-						_this.controller.set('groupComment', '');
-					}
-					else if (commentType === 'event') {
-						_this.controller.set('eventComment', '');
-					}
-					
-				});
-			});
-		}
+    }
 
 	}
 

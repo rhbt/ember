@@ -52,9 +52,9 @@
 {{/if}}
 		
 
-		{{#if notMember}}
+		{{#unless isMember}}
 		<button class='btn btn-primary text-left' {{action 'joinGroup' group}}> Join group </button>
-		{{/if}}
+		{{/unless}}
 
 
 <button class='btn btn-primary' {{action 'showDiscussion' true}}> Discussion </button>
