@@ -1,6 +1,7 @@
 import Ember from 'ember';
+import CommentMixin from '../../mixins/comments';
 
-export default Ember.Controller.extend({
+export default Ember.Controller.extend(CommentMixin, {
 	loggedInUser: Ember.inject.service('user'),
 
 	groupComment: '',

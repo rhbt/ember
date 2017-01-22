@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import CommentMixin from '../../mixins/comment'
+import CommentMixin from '../../mixins/comments';
 
 export default Ember.Route.extend(CommentMixin, {
 
@@ -55,7 +55,8 @@ export default Ember.Route.extend(CommentMixin, {
 
 		willTransition() {
 	      this.controller.get('event').rollbackAttributes();
-	    }
+	    },
+
 
 	}
 

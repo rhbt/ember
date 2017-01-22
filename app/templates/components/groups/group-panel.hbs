@@ -6,7 +6,7 @@
 			<p>{{group.members.length}} members</p>
 			{{#if (userNotMember memberships group.id)}}
 			{{#if notMember}}
-			<button class='btn btn-link text-left' {{action 'joinGroup' group}}> Join group </button>
+			<button class='btn btn-primary text-left' {{action 'joinGroup' group}}> Join group </button>
 			{{else}}
 			<p>MEMBER</p>
 			{{/if}}

@@ -5,5 +5,6 @@ export default DS.Model.extend({
   lastName: DS.attr('string'),
   
   administrating: DS.hasMany('groups', {inverse: 'admins',async: true}),
-  memberships: DS.hasMany('groups', {inverse: 'members',async: true})
+  memberships: DS.hasMany('groups', {inverse: 'members',async: true}),
+  institution: DS.belongsTo('institution')
 });

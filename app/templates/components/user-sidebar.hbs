@@ -6,8 +6,10 @@
 
 	{{#each user.memberships as |group|}}
 	<div class='group-container'>
+	{{#link-to 'groups.show' group.id}}
 	<div class='group-pic text-center'><img class="test" src="http://placekitten.com/g/650/300"></div>
-	<h3>{{group.name}}</h3>
+	<h3> {{group.name}} </h3>
+	
 	<p>{{group.members.length}} members</p>
 	</div>
 	{{/each}}

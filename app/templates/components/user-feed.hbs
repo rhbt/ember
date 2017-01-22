@@ -3,7 +3,7 @@
 	{{#each events as |event|}}
 	<div class='user-feed-item'>
 	{{#link-to 'groups.show' event.group.id}}<div class='group-profile-pic'></div>{{/link-to}}
-	<h3 class='group-header'>{{event.group.name}} <small>- created an event</small> </h3> 
+	<h3 class='group-header'>{{#link-to 'groups.show' event.group.id}} {{event.group.name}} {{/link-to}} <small>- created an event</small> </h3> 
 	<p> Yesterday at 11:29 am </p>
 
 	<h3 class='event-name'>{{#link-to 'events.show' event.id}}{{event.name}}{{/link-to}}</h3>

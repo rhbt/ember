@@ -1,21 +1,25 @@
 <div class='row'>
 	<div class='col-md-offset-2 col-md-10'>
 		<img src='/assets/images/group-placeholder.jpg'> 
-		{{model.firstName}}
+		<h1>{{model.firstName}}</h1>
 
-		<h1>Groups you admin</h1>
+		{{#if model.administrating}}
+		<h1>Groups you manage</h1>
 		{{#each model.administrating as |group|}} 
 		{{#link-to 'groups.show' group.id}} {{group.name}} {{/link-to}}
 		<br>
 		{{/each}}
+		{{/if}}
 
-
-		<h1>Groups memberships</h1>
+		<h1>Your group memberships</h1>
+		{{#if model.memberships}}
 		{{#each model.memberships as |group|}} 
 		{{#link-to 'groups.show' group.id}} {{group.name}} {{/link-to}}
 		<br>
 		{{/each}}
-
+		{{else}}
+		No groups yet.
+		{{/if}}
 
 	</div>
 </div>
